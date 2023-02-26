@@ -19,7 +19,6 @@ const History = () => {
     const getUserSession = async () => {
         try {
             const { data } = await axios.get('/api/session/');
-            console.log(data);
             setHistory(data);
         } catch (error: any) {
             notify(error.message);
@@ -47,7 +46,7 @@ const History = () => {
                     </thead>
                     <tbody>
                         {history.map((data: any, index) => (
-                            <tr className=" border-b bg-gray-800 border-gray-700">
+                            <tr className=" border-b bg-gray-800 border-gray-700" key={data._id}>
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap ">
                                     {index + 1}
                                 </th>
