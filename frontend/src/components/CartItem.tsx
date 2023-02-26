@@ -77,7 +77,7 @@ const CartItem = ({ cart, getCart }: { cart: CartType; getCart: () => Promise<vo
                         {!edit ? (
                             <input className="w-[30px] text-white bg-transparent" value={cart.quantity} readOnly />
                         ) : (
-                            <input className="text-black w-[20px]" value={editedCart} onChange={(e) => setEditedCart(e.target.value)} type="number" />
+                            <input className="text-black w-[50px]" value={editedCart} onChange={(e) => setEditedCart(e.target.value)} type="number" />
                         )}
                         <button className="p-1 bg-green-700 text-white rounded-sm" onClick={!edit ? () => setEdit(true) : handleEditQuantity}>
                             {!edit ? 'Edit' : 'Submit'}

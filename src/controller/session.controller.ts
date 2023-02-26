@@ -9,7 +9,7 @@ import { CreateSesionInput } from '../schema/session.schema';
 const accessTokenCookieOptions: CookieOptions = {
     maxAge: 900000, // 15 mins
     httpOnly: true,
-    domain: 'localhost',
+    // domain: 'localhost',
     path: '/',
     sameSite: 'lax',
     secure: false

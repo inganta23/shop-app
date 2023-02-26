@@ -43,16 +43,7 @@ function App() {
                         </Guard>
                     }
                 >
-                    <Route
-                        path=":productId"
-                        element={
-                            <Guard>
-                                <Navbar>
-                                    <Product isMyStore={true} />
-                                </Navbar>
-                            </Guard>
-                        }
-                    />
+                    <Route path=":productId" element={<Product isMyStore={true} />} />
                 </Route>
                 <Route
                     path="/about"

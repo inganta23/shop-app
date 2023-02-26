@@ -31,7 +31,7 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
             res.cookie('accessToken', newAccessToken, {
                 maxAge: 900000, // 15 mins
                 httpOnly: true,
-                domain: 'localhost',
+                // domain: 'localhost',
                 path: '/',
                 sameSite: 'strict',
                 secure: false
