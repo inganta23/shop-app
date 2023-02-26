@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useSearchParams } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import AuthGuard from './components/AuthGuard';
+import Guard from './components/Guard';
 import Navbar from './components/Navbar';
 import Product from './components/Product';
 import About from './pages/About';
@@ -8,59 +10,58 @@ import Main from './pages/Main';
 import { MyStore } from './pages/MyStore';
 
 function App() {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [isHome, setIsHome] = useState(false);
-    const [loading, setIsLoading] = useState(true);
-    useEffect(() => {
-        setIsLoading(true);
-        if (searchParams.get('menu')) setIsHome(true);
-        else setIsHome(false);
-        setIsLoading(false);
-    }, [searchParams]);
     return (
         <>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route
+                    path="/"
+                    element={
+                        <AuthGuard>
+                            <Home />
+                        </AuthGuard>
+                    }
+                />
                 <Route
                     path="/main"
                     element={
-                        <Navbar>
-                            <Main />
-                        </Navbar>
+                        <Guard>
+                            <Navbar>
+                                <Main />
+                            </Navbar>
+                        </Guard>
                     }
                 >
-                    <Route
-                        path=":productId"
-                        element={
-                            <Navbar>
-                                <Product />
-                            </Navbar>
-                        }
-                    />
+                    <Route path=":productId" element={<Product />} />
                 </Route>
                 <Route
                     path="/mystore"
                     element={
-                        <Navbar>
-                            <MyStore />
-                        </Navbar>
+                        <Guard>
+                            <Navbar>
+                                <MyStore />
+                            </Navbar>
+                        </Guard>
                     }
                 >
                     <Route
                         path=":productId"
                         element={
-                            <Navbar>
-                                <Product isMyStore={true} />
-                            </Navbar>
+                            <Guard>
+                                <Navbar>
+                                    <Product isMyStore={true} />
+                                </Navbar>
+                            </Guard>
                         }
                     />
                 </Route>
                 <Route
                     path="/about"
                     element={
-                        <Navbar>
-                            <About />
-                        </Navbar>
+                        <Guard>
+                            <Navbar>
+                                <About />
+                            </Navbar>
+                        </Guard>
                     }
                 />
             </Routes>

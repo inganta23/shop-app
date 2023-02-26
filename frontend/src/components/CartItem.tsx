@@ -46,6 +46,7 @@ const CartItem = ({ cart, getCart }: { cart: CartType; getCart: () => Promise<vo
         try {
             await axios.delete(`/api/cart/${cart._id}`);
             getCart();
+            notify('Cart Deleted');
             location.reload();
         } catch (error: any) {
             notify(error.message);
@@ -59,6 +60,7 @@ const CartItem = ({ cart, getCart }: { cart: CartType; getCart: () => Promise<vo
             await axios.post('/api/cart/checkout', { productsId, quantities });
             //@ts-ignore
             await axios.delete(`/api/cart/${cart._id}`);
+            notify('Thank You For Buying');
             location.reload();
         } catch (error: any) {
             notify(error.message);

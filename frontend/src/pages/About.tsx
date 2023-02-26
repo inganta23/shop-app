@@ -14,9 +14,9 @@ const About = () => {
         // setLoading(false);
     };
 
-    useEffect(() => {
-        getUser();
-    }, []);
+    // useEffect(() => {
+    //     getUser();
+    // }, []);
     return (
         <div className="mt-10 lg:px-10 sm:px-4 text-center">
             <h1 className="text-3xl font-bold tracking-wide">Welcome to Jon - Shop!</h1>

@@ -55,10 +55,11 @@ const Product = ({ isMyStore }: { isMyStore?: boolean }) => {
                 product: productId,
                 quantity: Number(quantity)
             });
+            notify('Added To Cart');
         } catch (error: any) {
             notify(error.message);
         }
-        setLoading(true);
+        setLoading(false);
         setIsAdd(false);
     };
 

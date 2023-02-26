@@ -2,7 +2,8 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { createContext, useContext } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 export interface UserType {
     _id: string;
@@ -19,14 +20,30 @@ interface ContextValue {
 const Context = createContext<ContextValue>({} as ContextValue);
 
 function Provider({ children }: { children: JSX.Element }) {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const notify = (message: string) =>
+        toast(message, {
+            position: 'top-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light'
+        });
     const navigate = useNavigate();
     const [user, setUser] = useState<UserType>({} as UserType);
 
     const getUser = async () => {
         try {
-            await axios.get('/api/user/me');
+            const { data } = await axios.get('/api/user/me');
+            setUser(data);
         } catch (error) {
-            localStorage.removeItem('userInfo');
+            if (!searchParams.get('menu')) {
+                notify('Please Log In');
+                deleteSession();
+            }
         }
     };
     const deleteSession = async () => {
@@ -39,16 +56,16 @@ function Provider({ children }: { children: JSX.Element }) {
 
     useEffect(() => {
         getUser();
-        const userInfo = JSON.parse(localStorage.getItem('userInfo') as string);
-        setUser(userInfo);
-
-        if (!userInfo) {
-            deleteSession();
-            navigate('/');
-        }
     }, [navigate]);
 
-    return <Context.Provider value={{ user, setUser }}>{children}</Context.Provider>;
+    return (
+        <Context.Provider value={{ user, setUser }}>
+            <>
+                <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+                {children}
+            </>
+        </Context.Provider>
+    );
 }
 
 export const State = () => {

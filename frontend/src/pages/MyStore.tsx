@@ -15,9 +15,9 @@ export const MyStore = () => {
         // setLoading(false);
     };
 
-    useEffect(() => {
-        getUser();
-    }, []);
+    // useEffect(() => {
+    //     getUser();
+    // }, []);
     return (
         <div>
             <Outlet />

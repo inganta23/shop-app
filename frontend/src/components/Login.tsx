@@ -29,7 +29,7 @@ const Login = () => {
                 password
             });
             const { data } = await axios.get('/api/user/me');
-            localStorage.setItem('userInfo', JSON.stringify(data));
+            // localStorage.setItem('userInfo', JSON.stringify(data));
             setEmail('');
             setPassword('');
             navigate('main');
