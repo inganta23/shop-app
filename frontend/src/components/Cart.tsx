@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { State } from '../context/Context';
 import CartItem from './CartItem';
+import PaginatedItems from './Pagination';
 import ProductCard, { ProductType } from './ProductCard';
 
 export interface CartType {
@@ -17,7 +19,19 @@ export interface CartType {
 
 const Cart = () => {
     const { user } = State();
-    const [carts, setCarts] = useState<Array<CartType>>();
+    const [carts, setCarts] = useState<Array<CartType>>([]);
+    const [currentItems, setCurrentItems] = useState<Array<CartType>>([]);
+    const notify = (message: string) =>
+        toast(message, {
+            position: 'top-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light'
+        });
 
     const handleCheckout = async () => {
         const productsId = carts?.map((cart) => cart.product._id);
@@ -30,18 +44,17 @@ const Cart = () => {
                 await axios.delete(`/api/cart/${carts[i]._id}`);
             }
             location.reload();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            notify(error.message);
         }
     };
 
     const getCart = async () => {
         try {
             const { data } = await axios.get('/api/cart');
-            console.log(data);
             setCarts(data);
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            notify(error.message);
         }
     };
     useEffect(() => {
@@ -49,6 +62,7 @@ const Cart = () => {
     }, []);
     return (
         <div>
+            <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
             <h1 className="text-2xl">{`Cart ${user.name}`}</h1>
             <p>{`Total Product : ${carts?.length}`}</p>
             <div className="relative overflow-x-auto">
@@ -67,11 +81,15 @@ const Cart = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {carts?.map((cart) => (
+                        {currentItems?.map((cart) => (
                             <CartItem cart={cart} getCart={getCart} key={cart._id} />
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            <div>
+                <PaginatedItems items={carts} setCurrentItems={setCurrentItems} currentItems={currentItems} />
             </div>
             <button className="p-2 rounded-md bg-blue-700 mt-6 text-white shadow-sm" onClick={handleCheckout}>
                 Checkout All Product

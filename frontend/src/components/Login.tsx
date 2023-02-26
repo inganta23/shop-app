@@ -1,10 +1,23 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const notify = (message: string) =>
+        toast(message, {
+            position: 'top-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light'
+        });
 
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -20,8 +33,8 @@ const Login = () => {
             setEmail('');
             setPassword('');
             navigate('main');
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            notify(error.message);
         }
     };
 
@@ -31,6 +44,7 @@ const Login = () => {
     };
     return (
         <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
+            <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-white">Login</h1>
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmitLogin}>

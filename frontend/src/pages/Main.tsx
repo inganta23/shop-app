@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import AllProducts from '../components/AllProducts';
-import Navbar from '../components/Navbar';
+import ReactLoading from 'react-loading';
 
 const Main = () => {
     const [user, setUser] = useState();
@@ -22,13 +22,19 @@ const Main = () => {
     useEffect(() => {
         getUser();
     }, []);
-    return (
-        <div>
-            <Navbar />
-            <Outlet />
-            <AllProducts />
-        </div>
-    );
+    if (loading)
+        return (
+            <div className="w-fit mx-auto">
+                <ReactLoading type={'spin'} color={'blue'} height={600} width={300} />
+            </div>
+        );
+    else
+        return (
+            <div>
+                <Outlet />
+                <AllProducts />
+            </div>
+        );
 };
 
 export default Main;

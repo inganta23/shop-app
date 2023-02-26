@@ -1,33 +1,72 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { CartType } from './Cart';
 
 const CartItem = ({ cart, getCart }: { cart: CartType; getCart: () => Promise<void> }) => {
     const [edit, setEdit] = useState(false);
     const [editedCart, setEditedCart] = useState(`${cart.quantity}`);
     const navigate = useNavigate();
+
+    const notify = (message: string) =>
+        toast(message, {
+            position: 'top-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light'
+        });
+
     const handleEditQuantity = async () => {
+        if (Number(editedCart) > Number(cart.product.stock)) {
+            notify('Out of Stock');
+            return;
+        }
+        if (Number(editedCart) <= 0) {
+            notify('Quantitny cant be less than one');
+            return;
+        }
         try {
             await axios.put(`/api/cart/${cart._id}`, {
                 quantity: Number(editedCart)
             });
+            setEdit(false);
             getCart();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            notify(error.message);
         }
+        setEdit(false);
     };
 
     const handleDeleteCart = async () => {
         try {
             await axios.delete(`/api/cart/${cart._id}`);
             getCart();
-        } catch (error) {
-            console.log(error);
+            location.reload();
+        } catch (error: any) {
+            notify(error.message);
+        }
+    };
+
+    const handleCheckout = async () => {
+        const productsId = [cart.product._id];
+        const quantities = [cart.quantity];
+        try {
+            await axios.post('/api/cart/checkout', { productsId, quantities });
+            //@ts-ignore
+            await axios.delete(`/api/cart/${cart._id}`);
+            location.reload();
+        } catch (error: any) {
+            notify(error.message);
         }
     };
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {cart.product.name}
             </th>
@@ -64,9 +103,11 @@ const CartItem = ({ cart, getCart }: { cart: CartType; getCart: () => Promise<vo
                 >
                     See
                 </button>
-                <button className="p-1 bg-blue-700 text-white rounded-sm"> Checkout </button>
-                <button className="p-1 bg-red-600 text-white rounded-sm" onClick={handleDeleteCart}>
+                <button className="p-1 bg-blue-700 text-white rounded-sm" onClick={handleCheckout}>
                     {' '}
+                    Checkout{' '}
+                </button>
+                <button className="p-1 bg-red-600 text-white rounded-sm" onClick={handleDeleteCart}>
                     Delete{' '}
                 </button>
             </td>
