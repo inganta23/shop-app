@@ -7,7 +7,9 @@ export async function createCartHandler(req: Request, res: Response) {
         const userId = res.locals.user._id;
         const body = req.body;
         const isExist = await getAllCart({ product: body.product });
+
         if (isExist[0]) {
+            if (Number(isExist[0].product.stock) < body.quantity + isExist[0].quantity) return res.status(404).send('Quantity cant be more than stock');
             const updated = await findAndUpdateCart(
                 { _id: isExist[0]._id },
                 {
@@ -38,9 +40,15 @@ export async function getCartHandler(req: Request, res: Response) {
 
 export async function updateCartHandler(req: Request, res: Response) {
     try {
-        const cartId = req.params.productId;
+        const cartId = req.params.cartId;
         const body = req.body;
-        const edited = findAndUpdateCart(
+        const cart = await getAllCart({
+            _id: cartId
+        });
+        //@ts-ignore
+        const stock = cart[0].product.stock;
+        if (Number(stock) < body.quantity) return res.status(404).send('Quantity cant be more than stock');
+        const edited = await findAndUpdateCart(
             { _id: cartId },
             {
                 quantity: body.quantity
@@ -69,32 +77,43 @@ export async function checkoutAll(req: Request, res: Response) {
     try {
         const body = req.body;
         let newQuantities = [];
-        console.log(body);
-        const products = await getAllProduct({
-            _id: { $in: body.productsId }
-        });
-        for (let i = 0; i < products.length; i++) {
-            const reverseI = products.length - 1 - i;
+        let profit = [];
 
-            const newStock = Number(products[i].stock) - body.quantities[reverseI];
+        for (let i = 0; i < body.productsId.length; i++) {
+            const product = await getAllProduct({
+                _id: body.productsId[i]
+            });
+            if (!product[0]) return res.status(404);
+            const newStock = Number(product[0].stock) - body.quantities[i];
             newQuantities.push(newStock);
+            profit.push(body.quantities[i] * Number(product[0].price));
         }
-        newQuantities = newQuantities.reverse();
-
-        for (let i = 0; i < products.length; i++) {
-            const edited = await findAndUpdateProduct(
+        for (let i = 0; i < body.productsId.length; i++) {
+            await findAndUpdateProduct(
                 { _id: body.productsId[i] },
                 {
-                    stock: `${newQuantities[i]}`
+                    stock: `${newQuantities[i]}`,
+                    profit: `${profit[i]}`
                 },
                 {
                     new: true
                 }
             );
-            console.log(edited);
         }
-        res.sendStatus(200);
+        return res.sendStatus(200);
     } catch (error: any) {
         return res.status(500).send(error.message);
     }
 }
+
+// export async function checkoutOnce(req: Request, res: Response) {
+//     try {
+//          const body = req.body;
+//          const productId = req.params.productId;
+//         const products = await getAllProduct({
+//             _id: { $in: body.productsId }
+//         });
+//     } catch (error) {
+
+//     }
+// }

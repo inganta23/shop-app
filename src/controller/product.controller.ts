@@ -15,8 +15,18 @@ export async function createProductHandler(req: Request<{}, {}, CreateProductInp
 
 export async function getAllProductHandler(req: Request, res: Response) {
     try {
-        // const userId = res.locals.user._id;
-        const allProduct = await getAllProduct();
+        const userId = res.locals.user._id;
+        const allProduct = await getAllProduct({ user: { $ne: userId } });
+        return res.send(allProduct);
+    } catch (error: any) {
+        return res.status(500).send(error.message);
+    }
+}
+
+export async function getMyProductHandler(req: Request, res: Response) {
+    try {
+        const userId = res.locals.user._id;
+        const allProduct = await getAllProduct({ user: userId });
         return res.send(allProduct);
     } catch (error: any) {
         return res.status(500).send(error.message);
@@ -57,11 +67,11 @@ export async function updateProductHandler(req: Request<UpdateProductInput['para
         if (!product) return res.sendStatus(403);
         if (String(product[0].user) !== userId) return res.sendStatus(403);
 
-        const updatedTask = await findAndUpdateProduct({ _id: productId }, updateContent, {
+        const updatedProduct = await findAndUpdateProduct({ _id: productId }, updateContent, {
             new: true
         });
 
-        return res.send(updatedTask);
+        return res.send(updatedProduct);
     } catch (error: any) {
         return res.status(500).send(error.message);
     }

@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProductHandler, deleteProductHandler, getAllProductHandler, getProductHandler, updateProductHandler } from '../controller/product.controller';
+import { createProductHandler, deleteProductHandler, getAllProductHandler, getMyProductHandler, getProductHandler, updateProductHandler } from '../controller/product.controller';
 import requireUser from '../middleware/requireUser';
 import validateResource from '../middleware/validateResource';
 import { CreateProductSchema, DeleteProductSchema, UpdateProductSchema } from '../schema/product.schema';
@@ -9,6 +9,8 @@ router
     .route('/')
     .get(requireUser, getAllProductHandler)
     .post([requireUser, validateResource(CreateProductSchema)], createProductHandler);
+
+router.route('/me').get(requireUser, getMyProductHandler);
 
 router
     .route('/:productId')

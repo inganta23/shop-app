@@ -8,6 +8,7 @@ export interface Product {
     description: string;
     stock: string;
     picture: string;
+    profit?: string;
 }
 
 export interface ProductDocument extends Product, Document {
@@ -20,6 +21,7 @@ const ProductSchema = new Schema<Product>(
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         name: { type: String, required: true },
         price: { type: String, required: true },
+        profit: { type: String },
         description: { type: String, required: true },
         stock: { type: String, required: true },
         picture: { type: String, required: true }

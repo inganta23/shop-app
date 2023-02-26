@@ -17,7 +17,11 @@ export async function getAllCart(query: FilterQuery<CartDocument> = {}) {
 }
 
 export async function findAndUpdateCart(query: FilterQuery<CartDocument>, update: UpdateQuery<Cart>, options: QueryOptions) {
-    return CartModel.findOneAndUpdate(query, update, options);
+    try {
+        return CartModel.findOneAndUpdate(query, update, options);
+    } catch (error: any) {
+        throw new Error(error);
+    }
 }
 
 export async function deleteCart(query: FilterQuery<CartDocument>) {

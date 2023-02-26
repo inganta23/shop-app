@@ -11,6 +11,7 @@ const payload = {
         picture: string({
             required_error: 'Picture is required'
         }),
+        profit: string().optional(),
         description: string({
             required_error: 'Description is required'
         }).min(10, 'Description should be 10 chars minimum'),

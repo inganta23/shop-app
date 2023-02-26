@@ -19,16 +19,50 @@ function App() {
     }, [searchParams]);
     return (
         <>
-            {!loading && !isHome && <Navbar />}
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/main" element={<Main />}>
-                    <Route path=":productId" element={<Product />} />
+                <Route
+                    path="/main"
+                    element={
+                        <Navbar>
+                            <Main />
+                        </Navbar>
+                    }
+                >
+                    <Route
+                        path=":productId"
+                        element={
+                            <Navbar>
+                                <Product />
+                            </Navbar>
+                        }
+                    />
                 </Route>
-                <Route path="/mystore" element={<MyStore />}>
-                    <Route path=":productId" element={<Product isMyStore={true} />} />
+                <Route
+                    path="/mystore"
+                    element={
+                        <Navbar>
+                            <MyStore />
+                        </Navbar>
+                    }
+                >
+                    <Route
+                        path=":productId"
+                        element={
+                            <Navbar>
+                                <Product isMyStore={true} />
+                            </Navbar>
+                        }
+                    />
                 </Route>
-                <Route path="/about" element={<About />} />
+                <Route
+                    path="/about"
+                    element={
+                        <Navbar>
+                            <About />
+                        </Navbar>
+                    }
+                />
             </Routes>
         </>
     );
