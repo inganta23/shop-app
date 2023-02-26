@@ -4,7 +4,7 @@ import ReactPaginate from 'react-paginate';
 function PaginatedItems({ items, currentItems, setCurrentItems }: { items: Array<any>; currentItems: Array<object>; setCurrentItems: React.Dispatch<React.SetStateAction<Array<any>>> }) {
     const [itemOffset, setItemOffset] = useState(0);
     const [pageCount, setPageCount] = useState(0);
-    const itemsPerPage = 6;
+    const itemsPerPage = 8;
 
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;

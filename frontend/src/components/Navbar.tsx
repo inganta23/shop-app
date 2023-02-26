@@ -37,8 +37,11 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
                 </Modal>
                 <header className="header sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
                     {/* logo */}
-                    <h1 className="w-3/12">
-                        <Link to={'/main'} className="text-xl">
+                    <h1 className="w-3/12 ">
+                        <Link
+                            to={'/main'}
+                            className="text-xl px-6 py-2 font-sans font-semibold text-white transition duration-300 ease-in-out delay-300 skew-y-6 border-b-4 rounded shadow-lg bg-cyan-600 border-cyan-800 shadow-cyan-600/50 hover:skew-x-6 hover:border-cyan-600"
+                        >
                             Jon - Shop
                         </Link>
                     </h1>

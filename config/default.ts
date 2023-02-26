@@ -41,7 +41,5 @@ ugTJHYE6Ko2fVp+WX6GgcxwtZjoHcvPCP8yXNjJHccA4dyxLiZqrv2ng/fBwgq8h
 aWwOPYsYBzOlzRI72D5wmKP9qnupWQNFB+5ZJN77U1IXlmb5IhRw1HhuQ3MScNmH
 OwIDAQAB
 -----END PUBLIC KEY-----`,
-    googleClientId: '430585250432-on2fs3rid5qi9p58pgbn1d8hbd6i8pis.apps.googleusercontent.com',
-    googleClientSecret: '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',
-    googleOauthRedirectUrl: 'http://localhost:1337/api/sessions/oauth/google'
+    origin: 'http://localhost:5173/'
 };

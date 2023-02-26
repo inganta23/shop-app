@@ -13,12 +13,12 @@ import cartRoutes from './routes/cart.route';
 const app = express();
 const port = config.get<number>('port');
 
-// app.use(
-//     cors({
-//         origin: config.get('origin'),
-//         credentials: true
-//     })
-// );
+app.use(
+    cors({
+        origin: config.get('origin'),
+        credentials: true
+    })
+);
 app.use(cookieParser());
 app.use(express.json());
 app.use(deserializeUser);
