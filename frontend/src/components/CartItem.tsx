@@ -65,53 +65,55 @@ const CartItem = ({ cart, getCart }: { cart: CartType; getCart: () => Promise<vo
         }
     };
     return (
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <>
             <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
-            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {cart.product.name}
-            </th>
-            <td className="px-6 py-4 text-center text-black">
-                <div className="flex items-center gap-2">
-                    {!edit ? (
-                        <input className="w-[30px] text-white bg-transparent" value={cart.quantity} readOnly />
-                    ) : (
-                        <input className="text-black w-[20px]" value={editedCart} onChange={(e) => setEditedCart(e.target.value)} type="number" />
-                    )}
-                    <button className="p-1 bg-green-700 text-white rounded-sm" onClick={!edit ? () => setEdit(true) : handleEditQuantity}>
-                        {!edit ? 'Edit' : 'Submit'}
-                    </button>
-                    {edit && (
-                        <button
-                            className="p-1 bg-red-700 text-white rounded-sm"
-                            onClick={() => {
-                                setEdit(false);
-                                setEditedCart(`${cart.quantity}`);
-                            }}
-                        >
-                            Close
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {cart.product.name}
+                </th>
+                <td className="px-6 py-4 text-center text-black">
+                    <div className="flex items-center gap-2">
+                        {!edit ? (
+                            <input className="w-[30px] text-white bg-transparent" value={cart.quantity} readOnly />
+                        ) : (
+                            <input className="text-black w-[20px]" value={editedCart} onChange={(e) => setEditedCart(e.target.value)} type="number" />
+                        )}
+                        <button className="p-1 bg-green-700 text-white rounded-sm" onClick={!edit ? () => setEdit(true) : handleEditQuantity}>
+                            {!edit ? 'Edit' : 'Submit'}
                         </button>
-                    )}
-                </div>
-            </td>
-            <td className="px-6 py-4 flex gap-2">
-                <button
-                    className="p-1 bg-red-400 text-white rounded-sm"
-                    onClick={() => {
-                        navigate(`/main/${cart.product._id}`);
-                        location.reload();
-                    }}
-                >
-                    See
-                </button>
-                <button className="p-1 bg-blue-700 text-white rounded-sm" onClick={handleCheckout}>
-                    {' '}
-                    Checkout{' '}
-                </button>
-                <button className="p-1 bg-red-600 text-white rounded-sm" onClick={handleDeleteCart}>
-                    Delete{' '}
-                </button>
-            </td>
-        </tr>
+                        {edit && (
+                            <button
+                                className="p-1 bg-red-700 text-white rounded-sm"
+                                onClick={() => {
+                                    setEdit(false);
+                                    setEditedCart(`${cart.quantity}`);
+                                }}
+                            >
+                                Close
+                            </button>
+                        )}
+                    </div>
+                </td>
+                <td className="px-6 py-4 flex gap-2">
+                    <button
+                        className="p-1 bg-red-400 text-white rounded-sm"
+                        onClick={() => {
+                            navigate(`/main/${cart.product._id}`);
+                            location.reload();
+                        }}
+                    >
+                        See
+                    </button>
+                    <button className="p-1 bg-blue-700 text-white rounded-sm" onClick={handleCheckout}>
+                        {' '}
+                        Checkout{' '}
+                    </button>
+                    <button className="p-1 bg-red-600 text-white rounded-sm" onClick={handleDeleteCart}>
+                        Delete{' '}
+                    </button>
+                </td>
+            </tr>
+        </>
     );
 };
 

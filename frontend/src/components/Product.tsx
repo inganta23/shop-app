@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { ProductType } from './ProductCard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactLoading from 'react-loading';
 
 type ProductParams = {
     productId: string;
@@ -14,6 +15,7 @@ const Product = ({ isMyStore }: { isMyStore?: boolean }) => {
     const [product, setProduct] = useState<ProductType>();
     const [isAdd, setIsAdd] = useState(false);
     const [quantity, setQuantity] = useState('0');
+    const [loading, setLoading] = useState(false);
 
     const notify = (message: string) =>
         toast(message, {
@@ -37,11 +39,14 @@ const Product = ({ isMyStore }: { isMyStore?: boolean }) => {
     };
 
     const handleAddCart = async () => {
+        setLoading(true);
         if (Number(quantity) > Number(product?.stock)) {
+            setLoading(false);
             notify('Out of stock');
             return;
         }
         if (Number(quantity) <= 0) {
+            setLoading(false);
             notify('Quantity Cant be less than one');
             return;
         }
@@ -53,6 +58,7 @@ const Product = ({ isMyStore }: { isMyStore?: boolean }) => {
         } catch (error: any) {
             notify(error.message);
         }
+        setLoading(true);
         setIsAdd(false);
     };
 
@@ -87,7 +93,7 @@ const Product = ({ isMyStore }: { isMyStore?: boolean }) => {
                                     className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                                     onClick={handleAddCart}
                                 >
-                                    Add
+                                    {loading ? <ReactLoading type={'spin'} color={'blue'} height={20} width={20} /> : 'Add'}
                                 </button>
                                 <button
                                     className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"

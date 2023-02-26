@@ -44,18 +44,20 @@ const ProductCard = ({ product, isMyStore }: { product: ProductType; isMyStore?:
         try {
             await axios.delete(`/api/product/${product._id}`);
             location.reload();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            notify(error.message);
         }
         setLoading(false);
     };
     const handleAddCart = async () => {
         setLoading(true);
         if (Number(quantity) > Number(product?.stock)) {
+            setLoading(false);
             notify('Out of stock');
             return;
         }
         if (Number(quantity) <= 0) {
+            setLoading(false);
             notify('Quantity Cant be less than one');
             return;
         }

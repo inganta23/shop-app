@@ -34,7 +34,7 @@ const AllProducts = ({ isMyStore }: { isMyStore?: boolean }) => {
     if (isMyStore)
         return (
             <>
-                <div className="flex gap-8 flex-wrap p-8 items-center justify-center">
+                <div className="flex gap-8 flex-wrap lg:p-20 md:p-8 items-center justify-center">
                     {currentItems && currentItems.map((product: ProductType) => <ProductCard isMyStore={isMyStore} product={product} key={product._id} />)}
                 </div>
                 <PaginatedItems items={myProduct} setCurrentItems={setCurrentItems} currentItems={currentItems} />
@@ -43,7 +43,7 @@ const AllProducts = ({ isMyStore }: { isMyStore?: boolean }) => {
     else
         return (
             <>
-                <div className="flex gap-8 flex-wrap p-8 items-center justify-center">
+                <div className="flex gap-8 flex-wrap lg:p-20 md:p-8 items-center justify-center">
                     {currentItems && currentItems.map((product: ProductType) => <ProductCard product={product} key={product._id} />)}
                 </div>
                 <PaginatedItems items={allProduct} setCurrentItems={setCurrentItems} currentItems={currentItems} />

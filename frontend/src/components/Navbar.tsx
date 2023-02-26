@@ -53,16 +53,14 @@ const Navbar = () => {
                     </ul>
                 </nav>
                 {/* buttons -*/}
-                <div className="w-fit gap-5 flex justify-end items-center">
+                <div className="w-3/12 gap-5 flex justify-end items-center">
                     <button className="p-2 rounded-md bg-red-400 text-white shadow-sm" onClick={() => setShowModalProduct(true)}>
                         Add Product
                     </button>
                     <button className="p-2 rounded-md bg-blue-700 text-white shadow-sm" onClick={() => setShowModalCart(true)}>
                         Cart
                     </button>
-                    {/* <button className="p-2 rounded-md bg-green-600 text-white shadow-sm" onClick={handleLogout}>
-                        Logout
-                    </button> */}
+
                     <div className="p-2 rounded-md bg-green-600 text-white shadow-sm">
                         <select className="w-full px-2.5 bg-green-600 rounded-md shadow-sm outline-none appearance-none" value={select} onChange={(e) => setSelect(e.target.value)}>
                             <option value="user">{(user && user.name) || 'User'}</option>
