@@ -50,7 +50,7 @@ const Cart = () => {
                 await axios.delete(`/api/cart/${carts[i]._id}`);
             }
             notify('Thank You For Buying');
-            getCart();
+            location.reload();
         } catch (error: any) {
             notify(error.message);
         }
