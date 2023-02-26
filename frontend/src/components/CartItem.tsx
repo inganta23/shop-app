@@ -47,7 +47,6 @@ const CartItem = ({ cart, getCart }: { cart: CartType; getCart: () => Promise<vo
             await axios.delete(`/api/cart/${cart._id}`);
             getCart();
             notify('Cart Deleted');
-            location.reload();
         } catch (error: any) {
             notify(error.message);
         }

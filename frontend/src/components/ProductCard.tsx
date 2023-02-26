@@ -67,6 +67,7 @@ const ProductCard = ({ product, isMyStore }: { product: ProductType; isMyStore?:
                 quantity: Number(quantity)
             });
             setIsAdd(false);
+            notify('Added to cart');
         } catch (error: any) {
             notify(error.message);
         }

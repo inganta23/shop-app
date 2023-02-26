@@ -51,12 +51,12 @@ const Product = ({ isMyStore }: { isMyStore?: boolean }) => {
                 product: productId,
                 quantity: Number(quantity)
             });
-            notify('Added To Cart');
+            setIsAdd(false);
+            notify('Added to cart');
         } catch (error: any) {
             notify(error.message);
         }
         setLoading(false);
-        setIsAdd(false);
     };
 
     useEffect(() => {
