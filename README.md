@@ -8,6 +8,6 @@ Please install package in backend and frontend berfore run the system
 The basic setting (mongo_uri, jwt_secret etc) is in ```config/default.ts``` .
 I exposed the config folder on purpose so you can use the app easily. But if you want to reconfigure the setting, feel free to change the ```config/default.ts``` file.
 
-I use cors in this system. if you found any issue related to the cookies maybe you can look into the cors. The cors configuratin is in ```src/servert.ts```
+I use cors in this system. if you found any issue related to the cookies maybe you can look into the cors. The cors configuration is in ```src/servert.ts```
 
 shop-app is made using MERN (MongoDB, Express, React, Node) and Typescript
