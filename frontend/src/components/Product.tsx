@@ -6,10 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactLoading from 'react-loading';
 
-type ProductParams = {
-    productId: string;
-};
-
 const Product = ({ isMyStore }: { isMyStore?: boolean }) => {
     const { productId } = useParams();
     const [product, setProduct] = useState<ProductType>();

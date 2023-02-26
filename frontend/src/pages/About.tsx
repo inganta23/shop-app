@@ -4,20 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import happy from '../assets/happy.jpg';
 
 const About = () => {
-    const navigate = useNavigate();
-    const getUser = async () => {
-        // setLoading(true);
-        try {
-            await axios.get('/api/user/me');
-        } catch (error) {
-            navigate('/');
-        }
-        // setLoading(false);
-    };
-
-    // useEffect(() => {
-    //     getUser();
-    // }, []);
     return (
         <div className="mt-10 lg:px-10 sm:px-4 text-center">
             <div className="text-3xl flex flex-col items-center justify-center mt-8 shadow-lg max-w-[900px] mx-auto rounded-lg p-6">

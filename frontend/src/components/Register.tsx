@@ -34,6 +34,7 @@ const Register = () => {
             setName('');
             setPassword('');
             setPasswordConfirmation('');
+            notify('Register Successful, Please Login');
             setSearchParams({
                 menu: 'login'
             });

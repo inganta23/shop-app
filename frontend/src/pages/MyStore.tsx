@@ -1,24 +1,8 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import AllProducts from '../components/AllProducts';
 import store from '../assets/store.jpg';
 
 export const MyStore = () => {
-    const navigate = useNavigate();
-    const getUser = async () => {
-        // setLoading(true);
-        try {
-            await axios.get('/api/user/me');
-        } catch (error) {
-            navigate('/');
-        }
-        // setLoading(false);
-    };
-
-    // useEffect(() => {
-    //     getUser();
-    // }, []);
     return (
         <div>
             <div className="text-3xl flex flex-col items-center justify-center mt-8 shadow-lg max-w-[900px] mx-auto rounded-lg p-6">

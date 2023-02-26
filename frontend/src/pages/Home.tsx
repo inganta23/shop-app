@@ -7,22 +7,6 @@ import axios from 'axios';
 const Home = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [menu, setMenu] = useState('');
-    const navigate = useNavigate();
-    const getUser = async () => {
-        try {
-            await axios.get('/api/user/me');
-            navigate('/main');
-        } catch (error) {
-            navigate('/');
-        }
-    };
-
-    useEffect(() => {
-        // const user = JSON.parse(localStorage.getItem('userInfo') as string);
-
-        // if (user) navigate('main');
-        getUser();
-    }, [navigate]);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('userInfo') as string);

@@ -5,10 +5,12 @@ import { State } from '../context/Context';
 import Cart from './Cart';
 import Form from './Form';
 import Modal from './Modal';
+import History from './History';
 
 const Navbar = ({ children }: { children: JSX.Element }) => {
     const [showModalProduct, setShowModalProduct] = useState(false);
     const [showModalCart, setShowModalCart] = useState(false);
+    const [showModalHistory, setShowModalHistory] = useState(false);
     const [select, setSelect] = useState('user');
 
     const handleLogout = async () => {
@@ -24,6 +26,9 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
     useEffect(() => {
         if (select === 'logout') {
             handleLogout();
+        } else if (select === 'history') {
+            setSelect('user');
+            setShowModalHistory(true);
         }
     }, [select]);
     return (
@@ -34,6 +39,9 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
                 </Modal>
                 <Modal showModal={showModalCart} setShowModal={setShowModalCart}>
                     <Cart />
+                </Modal>
+                <Modal showModal={showModalHistory} setShowModal={setShowModalHistory}>
+                    <History />
                 </Modal>
                 <header className="header sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
                     {/* logo */}
@@ -69,6 +77,7 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
                             <select className="w-full px-2.5 bg-green-600 rounded-md shadow-sm outline-none appearance-none cursor-pointer" value={select} onChange={(e) => setSelect(e.target.value)}>
                                 <option value="user">{(user && user.name) || 'User'}</option>
                                 <option value="logout">Logout</option>
+                                <option value="history">History</option>
                             </select>
                         </div>
                     </div>

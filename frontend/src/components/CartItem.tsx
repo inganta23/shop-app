@@ -69,8 +69,8 @@ const CartItem = ({ cart, getCart }: { cart: CartType; getCart: () => Promise<vo
     return (
         <>
             <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <tr className=" border-b bg-gray-800 border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
                     {cart.product.name}
                 </th>
                 <td className="px-6 py-4 text-center text-black">

@@ -83,7 +83,7 @@ export async function checkoutAll(req: Request, res: Response) {
             const product = await getAllProduct({
                 _id: body.productsId[i]
             });
-            if (!product[0]) return res.status(404);
+            if (!product[0] || Number(product[0].stock) === 0) return res.status(404);
             const newStock = Number(product[0].stock) - body.quantities[i];
             newQuantities.push(newStock);
             profit.push(body.quantities[i] * Number(product[0].price));
